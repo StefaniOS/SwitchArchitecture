@@ -7,9 +7,9 @@
 
 func userReducer(state: inout UserState, action: UserAction) -> Void {
     switch action {
-    case .login:
-        state.authenticated = true
-    case .logout:
-        state.authenticated = false
+    case .authentication(action: .login):
+        state.authentication.authenticated = true
+    case .authentication(action: .logout):
+        state.authentication.authenticated = false
     }
 }

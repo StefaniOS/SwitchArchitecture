@@ -6,6 +6,13 @@
 //
 
 enum UserAction {
-    case login
-    case logout
+    case authentication(action: Authentication)
+}
+
+extension UserAction {
+
+    enum Authentication {
+        case login
+        case logout
+    }
 }

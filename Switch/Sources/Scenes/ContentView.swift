@@ -11,17 +11,17 @@ struct ContentView: View {
 
     @StateObject var store: AppStore = .init(state: AppState.default, reducer: appReducer)
 
-    private var userState: UserState { store.state.userState }
+    private var authenticated: Bool { store.state.userState.authentication.authenticated }
 
     var body: some View {
         VStack {
-            Image(systemName: userState.authenticated ? "lock.open.fill" : "lock.fill")
+            Image(systemName: authenticated ? "lock.open.fill" : "lock.fill")
                 .imageScale(.large)
                 .foregroundColor(.accentColor)
             Button {
                 onAction()
             } label: {
-                Text(userState.authenticated ? "Logout" : "Login")
+                Text(authenticated ? "Logout" : "Login")
             }
 
         }
@@ -29,10 +29,10 @@ struct ContentView: View {
     }
 
     private func onAction() {
-        if userState.authenticated {
-            store.dispatch(.user(action: .logout))
+        if authenticated {
+            store.dispatch(.user(action: .authentication(action: .logout)))
         } else {
-            store.dispatch(.user(action: .login))
+            store.dispatch(.user(action: .authentication(action: .login)))
         }
     }
 }

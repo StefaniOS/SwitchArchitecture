@@ -6,5 +6,12 @@
 //
 
 struct UserState {
-    var authenticated: Bool
+    var authentication: Authentication
+}
+
+extension UserState {
+    
+    struct Authentication {
+        var authenticated: Bool
+    }
 }

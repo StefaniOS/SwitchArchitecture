@@ -11,5 +11,5 @@ struct AppState {
 
 extension AppState {
 
-    static let `default`: Self = .init(userState: .init(authenticated: false))
+    static let `default`: Self = .init(userState: .init(authentication: .init(authenticated: false)))
 }
