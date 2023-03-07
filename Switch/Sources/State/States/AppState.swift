@@ -6,10 +6,11 @@
 //
 
 struct AppState {
-    var userState: UserState
+    var userState: UserState = .init()
 }
 
 extension AppState {
 
-    static let `default`: Self = .init(userState: .init(authentication: .init(authenticated: false)))
+    static let `default`: Self = .init(userState: .init(authentication: .init(authenticated: false),
+                                                        validation: .init(username: "test", password: "1234")))
 }

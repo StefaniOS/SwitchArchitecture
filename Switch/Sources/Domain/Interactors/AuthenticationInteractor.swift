@@ -13,7 +13,7 @@ struct AuthenticationInteractor {
     private let store: AppStore
 
     // States
-    private let userState: UserState
+    private var userState: UserState { store.state.userState }
 
     // UseCases
     private let loginUseCase: LoginUseCase
@@ -21,7 +21,6 @@ struct AuthenticationInteractor {
 
     init(store: AppStore) {
         self.store = store
-        self.userState = store.state.userState
         self.loginUseCase = .init(store: store)
         self.logoutUseCase = .init(store: store)
     }
@@ -29,16 +28,34 @@ struct AuthenticationInteractor {
 
 extension AuthenticationInteractor {
 
-    var isAuthenticated: Bool { userState.authentication.authenticated }
+    private var isValid: Bool {
+        userState.validation.usernameInput == userState.validation.username &&
+        userState.validation.passwordInput == userState.validation.password
+    }
 }
 
 extension AuthenticationInteractor {
 
-    func onAuthenticate() {
-        if isAuthenticated {
-            logoutUseCase.execute()
-        } else {
+    var usernameInitialValue: String { userState.validation.usernameInput }
+    var passwordInitialValue: String { userState.validation.passwordInput }
+    var isAuthenticated: Bool { userState.authentication.authenticated }
+
+    func executeLogin() {
+        if isValid {
             loginUseCase.execute()
+            store.dispatch(.user(action: .resetInputs))
         }
+    }
+
+    func executeLogout() {
+        logoutUseCase.execute()
+    }
+
+    func onUsernameInputChange(_ newValue: String) {
+        store.dispatch(.user(action: .changeUsernameInput(newValue)))
+    }
+
+    func onPasswordInputChange(_ newValue: String) {
+        store.dispatch(.user(action: .changePasswordInput(newValue)))
     }
 }

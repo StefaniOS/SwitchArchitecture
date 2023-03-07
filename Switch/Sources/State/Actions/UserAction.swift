@@ -7,6 +7,9 @@
 
 enum UserAction {
     case authentication(action: Authentication)
+    case changeUsernameInput(_ username: String)
+    case changePasswordInput(_ username: String)
+    case resetInputs
 }
 
 extension UserAction {

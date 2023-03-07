@@ -11,5 +11,12 @@ func userReducer(state: inout UserState, action: UserAction) -> Void {
         state.authentication.authenticated = true
     case .authentication(action: .logout):
         state.authentication.authenticated = false
+    case .changeUsernameInput(let username):
+        state.validation.usernameInput = username
+    case .changePasswordInput(let password):
+        state.validation.passwordInput = password
+    case .resetInputs:
+        state.validation.usernameInput = ""
+        state.validation.passwordInput = ""
     }
 }
