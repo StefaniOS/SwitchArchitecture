@@ -1,5 +1,5 @@
 //
-//  AuthenticationViewModel.swift
+//  AuthenticationInteractor.swift
 //  Switch
 //
 //  Created by Stepan Vardanyan on 07.03.23.
@@ -7,9 +7,7 @@
 
 import Foundation
 
-struct AuthenticationViewModel {
-
-    private var isAuthenticated: Bool { userState.authentication.authenticated }
+struct AuthenticationInteractor {
 
     private let store: AppStore
     private let userState: UserState
@@ -18,18 +16,20 @@ struct AuthenticationViewModel {
         self.store = store
         self.userState = store.state.userState
     }
+}
 
-    func onAction() {
+extension AuthenticationInteractor {
+
+    var isAuthenticated: Bool { userState.authentication.authenticated }
+}
+
+extension AuthenticationInteractor {
+
+    func onAuthenticate() {
         if isAuthenticated {
             store.dispatch(.user(action: .authentication(action: .logout)))
         } else {
             store.dispatch(.user(action: .authentication(action: .login)))
         }
     }
-}
-
-extension AuthenticationViewModel {
-
-    var imageName: String { isAuthenticated ? "lock.open.fill" : "lock.fill" }
-    var actionTitle: String { isAuthenticated ? "Logout" : "Login" }
 }

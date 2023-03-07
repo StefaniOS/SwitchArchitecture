@@ -16,6 +16,6 @@ struct ContentView: View {
     }
 
     var body: some View {
-        AuthenticationView(viewModel: .init(store: store))
+        AuthenticationView(viewModel: .init(interactor: .init(store: store)))
     }
 }
