@@ -10,9 +10,11 @@ import SwiftUI
 @main
 struct SwitchApp: App {
 
+    private let store: AppStore = .init(state: AppState.default, reducer: appReducer)
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(store: store)
         }
     }
 }

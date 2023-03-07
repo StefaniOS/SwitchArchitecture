@@ -17,8 +17,10 @@
 		2A18A87D29B68D9A0060F7DB /* UserReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A18A87C29B68D9A0060F7DB /* UserReducer.swift */; };
 		2A18A87F29B68DF70060F7DB /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A18A87E29B68DF70060F7DB /* AppState.swift */; };
 		2A6C3E9E29AAC9A600DE3EF8 /* SwitchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6C3E9D29AAC9A600DE3EF8 /* SwitchApp.swift */; };
-		2A6C3EA029AAC9A600DE3EF8 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6C3E9F29AAC9A600DE3EF8 /* ContentView.swift */; };
+		2A6C3EA029AAC9A600DE3EF8 /* AuthenticationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6C3E9F29AAC9A600DE3EF8 /* AuthenticationView.swift */; };
 		2A6C3EA529AAC9A800DE3EF8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2A6C3EA429AAC9A800DE3EF8 /* Preview Assets.xcassets */; };
+		2A95483B29B74DD400B4AAEF /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A95483A29B74DD400B4AAEF /* ContentView.swift */; };
+		2A95483D29B74F3300B4AAEF /* AuthenticationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A95483C29B74F3300B4AAEF /* AuthenticationViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,10 +34,12 @@
 		2A18A87E29B68DF70060F7DB /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		2A6C3E9A29AAC9A600DE3EF8 /* Switch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Switch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A6C3E9D29AAC9A600DE3EF8 /* SwitchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchApp.swift; sourceTree = "<group>"; };
-		2A6C3E9F29AAC9A600DE3EF8 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2A6C3E9F29AAC9A600DE3EF8 /* AuthenticationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationView.swift; sourceTree = "<group>"; };
 		2A6C3EA129AAC9A800DE3EF8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2A6C3EA429AAC9A800DE3EF8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2A6C3EAE29AACA3200DE3EF8 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
+		2A95483A29B74DD400B4AAEF /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		2A95483C29B74F3300B4AAEF /* AuthenticationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				2A6C3E9D29AAC9A600DE3EF8 /* SwitchApp.swift */,
+				2A95483A29B74DD400B4AAEF /* ContentView.swift */,
 				2A18A87529B68A610060F7DB /* State */,
 				2A18A86B29B546730060F7DB /* Scenes */,
 				2A6C3EAB29AACA3200DE3EF8 /* Core */,
@@ -72,7 +77,8 @@
 		2A18A86B29B546730060F7DB /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				2A6C3E9F29AAC9A600DE3EF8 /* ContentView.swift */,
+				2A95483C29B74F3300B4AAEF /* AuthenticationViewModel.swift */,
+				2A6C3E9F29AAC9A600DE3EF8 /* AuthenticationView.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -235,9 +241,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2A95483D29B74F3300B4AAEF /* AuthenticationViewModel.swift in Sources */,
 				2A18A87F29B68DF70060F7DB /* AppState.swift in Sources */,
+				2A95483B29B74DD400B4AAEF /* ContentView.swift in Sources */,
 				2A18A87B29B68D330060F7DB /* AppAction.swift in Sources */,
-				2A6C3EA029AAC9A600DE3EF8 /* ContentView.swift in Sources */,
+				2A6C3EA029AAC9A600DE3EF8 /* AuthenticationView.swift in Sources */,
 				2A18A87D29B68D9A0060F7DB /* UserReducer.swift in Sources */,
 				2A18A87429B689320060F7DB /* UserState.swift in Sources */,
 				2A18A87929B68CFB0060F7DB /* AppReducer.swift in Sources */,
