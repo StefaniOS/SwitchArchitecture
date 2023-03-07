@@ -9,12 +9,21 @@ import Foundation
 
 struct AuthenticationInteractor {
 
+    // Store
     private let store: AppStore
+
+    // States
     private let userState: UserState
+
+    // UseCases
+    private let loginUseCase: LoginUseCase
+    private let logoutUseCase: LogoutUseCase
 
     init(store: AppStore) {
         self.store = store
         self.userState = store.state.userState
+        self.loginUseCase = .init(store: store)
+        self.logoutUseCase = .init(store: store)
     }
 }
 
@@ -27,9 +36,9 @@ extension AuthenticationInteractor {
 
     func onAuthenticate() {
         if isAuthenticated {
-            store.dispatch(.user(action: .authentication(action: .logout)))
+            logoutUseCase.execute()
         } else {
-            store.dispatch(.user(action: .authentication(action: .login)))
+            loginUseCase.execute()
         }
     }
 }
