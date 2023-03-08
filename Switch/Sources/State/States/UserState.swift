@@ -6,13 +6,14 @@
 //
 
 struct UserState {
-    var authentication: Authentication = .init(authenticated: false)
+    var authentication: Authentication = .init()
     var validation: Validation = .init(username: "", password: "")
 }
 
 extension UserState {
     struct Authentication {
-        var authenticated: Bool
+        var authenticated: Bool = false
+        var isRequesting: Bool = false
     }
 }
 

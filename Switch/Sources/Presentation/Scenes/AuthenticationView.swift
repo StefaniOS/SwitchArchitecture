@@ -63,6 +63,7 @@ struct AuthenticationView: View {
             .background(Color.init(white: 0.95))
             .cornerRadius(16)
             .padding()
+            .disabled(viewModel.shouldDisableInputView)
     }
 }
 

@@ -32,6 +32,10 @@ extension AuthenticationInteractor {
         userState.validation.usernameInput == userState.validation.username &&
         userState.validation.passwordInput == userState.validation.password
     }
+
+    private func startLogin() {
+        store.dispatch(.user(action: .authentication(action: .startLogin)))
+    }
 }
 
 extension AuthenticationInteractor {
@@ -39,11 +43,18 @@ extension AuthenticationInteractor {
     var usernameInitialValue: String { userState.validation.usernameInput }
     var passwordInitialValue: String { userState.validation.passwordInput }
     var isAuthenticated: Bool { userState.authentication.authenticated }
+    var isAuthenticating: Bool { userState.authentication.isRequesting }
 
     func executeLogin() {
-        if isValid {
-            loginUseCase.execute()
-            store.dispatch(.user(action: .resetInputs))
+        guard isValid else { return }
+
+        startLogin()
+
+        Task {
+            let result = await loginUseCase.execute()
+            if case .success = result {
+                resetUserInputs()
+            }
         }
     }
 
@@ -52,10 +63,14 @@ extension AuthenticationInteractor {
     }
 
     func onUsernameInputChange(_ newValue: String) {
-        store.dispatch(.user(action: .changeUsernameInput(newValue)))
+        store.dispatch(.user(action: .validation(action: .changeUsernameInput(newValue))))
     }
 
     func onPasswordInputChange(_ newValue: String) {
-        store.dispatch(.user(action: .changePasswordInput(newValue)))
+        store.dispatch(.user(action: .validation(action: .changePasswordInput(newValue))))
+    }
+
+    func resetUserInputs() {
+        store.dispatch(.user(action: .validation(action: .resetInputs)))
     }
 }

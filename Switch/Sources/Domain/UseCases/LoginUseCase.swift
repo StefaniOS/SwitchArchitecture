@@ -15,7 +15,14 @@ struct LoginUseCase {
         self.store = store
     }
 
-    func execute() {
-        store.dispatch(.user(action: .authentication(action: .login)))
+    func execute() async -> Result<Bool, Error> {
+        let result = await authenticate()
+        store.dispatch(.user(action: .authentication(action: .onLoginCompleted(result: result))))
+        return result
+    }
+
+    private func authenticate() async -> Result<Bool, Error> {
+        try? await Task.sleep(until: .now + .seconds(3),clock: .suspending)
+        return .success(true)
     }
 }

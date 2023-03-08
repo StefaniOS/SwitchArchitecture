@@ -37,4 +37,5 @@ extension AuthenticationViewModel {
     var actionTitle: String { isAuthenticated ? "Logout" : "Login" }
 
     var shouldShowInputFields: Bool { !isAuthenticated }
+    var shouldDisableInputView: Bool { interactor.isAuthenticating }
 }

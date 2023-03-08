@@ -27,9 +27,11 @@ final class Store<State, Action>: ObservableObject {
     }
 
     func dispatch(_ action: Action, interactive: Bool = false) {
-        let queue = interactive ? userInteractiveQueue : userInitiatedQueue
-        queue.sync {
-            reducer(&self.state, action)
+        Task { @MainActor in
+            let queue = interactive ? userInteractiveQueue : userInitiatedQueue
+            queue.sync {
+                reducer(&self.state, action)
+            }
         }
     }
 }
