@@ -11,18 +11,16 @@ struct LoginUseCase {
 
     private let store: AppStore
 
-    init(store: AppStore) {
+    private var authenticationRepository: UserAuthenticationRepository
+
+    init(store: AppStore, authenticationRepository: UserAuthenticationRepository = .init()) {
         self.store = store
+        self.authenticationRepository = authenticationRepository
     }
 
     func execute() async -> Result<Bool, Error> {
-        let result = await authenticate()
+        let result = await authenticationRepository.authenticate()
         store.dispatch(.user(action: .authentication(action: .onLoginCompleted(result: result))))
         return result
-    }
-
-    private func authenticate() async -> Result<Bool, Error> {
-        try? await Task.sleep(until: .now + .seconds(3),clock: .suspending)
-        return .success(true)
     }
 }
