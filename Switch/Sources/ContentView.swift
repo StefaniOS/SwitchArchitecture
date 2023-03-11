@@ -16,6 +16,10 @@ struct ContentView: View {
     }
 
     var body: some View {
-        AuthenticationView(viewModel: .init(interactor: .init(store: store)))
+        AuthenticationView(viewModel: .init(interactor: .init(store: store,
+                                                              validateUsernameUseCase: .init(),
+                                                              validatePasswordUseCase: .init(),
+                                                              loginUseCase: .init(store: store),
+                                                              logoutUseCase: .init(store: store))))
     }
 }

@@ -15,7 +15,7 @@ struct UserAuthenticationRepository {
         self.authenticationService = authenticationService
     }
 
-    func authenticate() async -> Result<Bool, Error> {
-        await authenticationService.authenticate()
+    func authenticate(username: String, password: String) async -> Result<Bool, Error> {
+        await authenticationService.authenticate(username: username, password: password)
     }
 }

@@ -26,6 +26,8 @@
 		2A95484929B7738500B4AAEF /* LogoutUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A95484829B7738500B4AAEF /* LogoutUseCase.swift */; };
 		2A95484D29B8EDDE00B4AAEF /* UserAuthenticationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A95484C29B8EDDE00B4AAEF /* UserAuthenticationRepository.swift */; };
 		2A95485029B8EF9600B4AAEF /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A95484F29B8EF9600B4AAEF /* AuthenticationService.swift */; };
+		2AD8AC1829BCDCCD00C0525A /* ValidateUsernameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8AC1729BCDCCD00C0525A /* ValidateUsernameUseCase.swift */; };
+		2AD8AC1A29BCDF3000C0525A /* ValidatePasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8AC1929BCDF3000C0525A /* ValidatePasswordUseCase.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,6 +52,8 @@
 		2A95484829B7738500B4AAEF /* LogoutUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutUseCase.swift; sourceTree = "<group>"; };
 		2A95484C29B8EDDE00B4AAEF /* UserAuthenticationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthenticationRepository.swift; sourceTree = "<group>"; };
 		2A95484F29B8EF9600B4AAEF /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
+		2AD8AC1729BCDCCD00C0525A /* ValidateUsernameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateUsernameUseCase.swift; sourceTree = "<group>"; };
+		2AD8AC1929BCDF3000C0525A /* ValidatePasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatePasswordUseCase.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +216,8 @@
 		2A95484729B772D000B4AAEF /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
+				2AD8AC1729BCDCCD00C0525A /* ValidateUsernameUseCase.swift */,
+				2AD8AC1929BCDF3000C0525A /* ValidatePasswordUseCase.swift */,
 				2A95484529B772C700B4AAEF /* LoginUseCase.swift */,
 				2A95484829B7738500B4AAEF /* LogoutUseCase.swift */,
 			);
@@ -323,8 +329,10 @@
 				2A18A87429B689320060F7DB /* UserState.swift in Sources */,
 				2A18A87929B68CFB0060F7DB /* AppReducer.swift in Sources */,
 				2A6C3E9E29AAC9A600DE3EF8 /* SwitchApp.swift in Sources */,
+				2AD8AC1A29BCDF3000C0525A /* ValidatePasswordUseCase.swift in Sources */,
 				2A18A86529B537E70060F7DB /* Store.swift in Sources */,
 				2A95484D29B8EDDE00B4AAEF /* UserAuthenticationRepository.swift in Sources */,
+				2AD8AC1829BCDCCD00C0525A /* ValidateUsernameUseCase.swift in Sources */,
 				2A95485029B8EF9600B4AAEF /* AuthenticationService.swift in Sources */,
 				2A95484629B772C700B4AAEF /* LoginUseCase.swift in Sources */,
 				2A18A87729B68C930060F7DB /* UserAction.swift in Sources */,

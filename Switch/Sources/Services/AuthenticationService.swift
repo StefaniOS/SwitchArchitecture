@@ -9,8 +9,9 @@ import Foundation
 
 struct AuthenticationService {
 
-    func authenticate() async -> Result<Bool, Error> {
+    func authenticate(username: String, password: String) async -> Result<Bool, Error> {
         try? await Task.sleep(until: .now + .seconds(3),clock: .suspending)
-        return .success(true)
+        let result = username == "Test" && password == "1234"
+        return .success(result)
     }
 }

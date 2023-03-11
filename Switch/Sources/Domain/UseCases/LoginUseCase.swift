@@ -13,14 +13,16 @@ struct LoginUseCase {
 
     private var authenticationRepository: UserAuthenticationRepository
 
-    init(store: AppStore, authenticationRepository: UserAuthenticationRepository = .init()) {
+    init(store: AppStore,
+         authenticationRepository: UserAuthenticationRepository = .init()) {
         self.store = store
         self.authenticationRepository = authenticationRepository
     }
 
-    func execute() async -> Result<Bool, Error> {
-        let result = await authenticationRepository.authenticate()
-        store.dispatch(.user(action: .authentication(action: .onLoginCompleted(result: result))))
+    func execute(username: String, password: String) async -> Result<Bool, Error> {
+        store.dispatch(.user(action: .authentication(action: .startLogin)))
+        let result = await authenticationRepository.authenticate(username: username, password: password)
+        store.dispatch(.user(action: .authentication(action: .finishLogin(result: result))))
         return result
     }
 }

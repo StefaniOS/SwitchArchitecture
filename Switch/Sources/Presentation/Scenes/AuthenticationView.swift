@@ -9,11 +9,11 @@ import SwiftUI
 
 struct AuthenticationView: View {
 
-    @ObservedObject
+    @StateObject
     private var viewModel: AuthenticationViewModel
 
     init(viewModel: AuthenticationViewModel) {
-        self.viewModel = viewModel
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
 
     var image: some View {
@@ -24,9 +24,9 @@ struct AuthenticationView: View {
 
     var inputView: some View {
         Group {
-            TextField("Username", text: $viewModel.usernameInput)
+            TextField("Username", text: $viewModel.username)
 
-            SecureField("Password", text: $viewModel.passwordInput)
+            SecureField("Password", text: $viewModel.password)
         }
         .padding()
         .background(Color.white)
@@ -38,6 +38,21 @@ struct AuthenticationView: View {
             viewModel.onAction()
         } label: {
             Text(viewModel.actionTitle)
+                .font(.title3)
+                .fontWeight(.bold)
+                .padding()
+                .foregroundColor(.white)
+                .frame(maxWidth: .infinity)
+                .background(Color.accentColor)
+                .clipShape(Capsule())
+        }
+    }
+
+    var resetButton: some View {
+        Button {
+            viewModel.onReset()
+        } label: {
+            Text(viewModel.resetTitle)
                 .font(.title3)
                 .fontWeight(.bold)
                 .padding()
@@ -64,11 +79,10 @@ struct AuthenticationView: View {
             .cornerRadius(16)
             .padding()
             .disabled(viewModel.shouldDisableInputView)
-    }
-}
-
-struct AuthenticationView_Previews: PreviewProvider {
-    static var previews: some View {
-        AuthenticationView(viewModel: .init(interactor: .init(store: .init(state: .default, reducer: appReducer))))
+            .onChange(of: viewModel.isAuthenticated) { newValue in
+                if newValue == true {
+                    viewModel.onReset()
+                }
+            }
     }
 }

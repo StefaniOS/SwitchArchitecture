@@ -16,61 +16,42 @@ struct AuthenticationInteractor {
     private var userState: UserState { store.state.userState }
 
     // UseCases
+    private let validateUsernameUseCase: ValidateUsernameUseCase
+    private let validatePasswordUseCase: ValidatePasswordUseCase
     private let loginUseCase: LoginUseCase
     private let logoutUseCase: LogoutUseCase
 
-    init(store: AppStore) {
+    init(store: AppStore,
+         validateUsernameUseCase: ValidateUsernameUseCase,
+         validatePasswordUseCase: ValidatePasswordUseCase,
+         loginUseCase: LoginUseCase,
+         logoutUseCase: LogoutUseCase) {
         self.store = store
-        self.loginUseCase = .init(store: store)
-        self.logoutUseCase = .init(store: store)
+        self.validateUsernameUseCase = validateUsernameUseCase
+        self.validatePasswordUseCase = validatePasswordUseCase
+        self.loginUseCase = loginUseCase
+        self.logoutUseCase = logoutUseCase
     }
 }
 
 extension AuthenticationInteractor {
 
-    private var isValid: Bool {
-        userState.validation.usernameInput == userState.validation.username &&
-        userState.validation.passwordInput == userState.validation.password
-    }
-
-    private func startLogin() {
-        store.dispatch(.user(action: .authentication(action: .startLogin)))
-    }
-}
-
-extension AuthenticationInteractor {
-
-    var usernameInitialValue: String { userState.validation.usernameInput }
-    var passwordInitialValue: String { userState.validation.passwordInput }
     var isAuthenticated: Bool { userState.authentication.authenticated }
     var isAuthenticating: Bool { userState.authentication.isRequesting }
 
-    func executeLogin() {
-        guard isValid else { return }
+    func validate(username: String, password: String) -> Bool {
+        let isValidUsername = validateUsernameUseCase.execute(username: username)
+        let isValidPassword = validatePasswordUseCase.execute(password: password)
+        return isValidUsername && isValidPassword
+    }
 
-        startLogin()
-
+    func executeLogin(username: String, password: String) {
         Task {
-            let result = await loginUseCase.execute()
-            if case .success = result {
-                resetUserInputs()
-            }
+            await loginUseCase.execute(username: username, password: password)
         }
     }
 
     func executeLogout() {
         logoutUseCase.execute()
-    }
-
-    func onUsernameInputChange(_ newValue: String) {
-        store.dispatch(.user(action: .validation(action: .changeUsernameInput(newValue))))
-    }
-
-    func onPasswordInputChange(_ newValue: String) {
-        store.dispatch(.user(action: .validation(action: .changePasswordInput(newValue))))
-    }
-
-    func resetUserInputs() {
-        store.dispatch(.user(action: .validation(action: .resetInputs)))
     }
 }
