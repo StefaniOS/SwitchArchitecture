@@ -34,6 +34,7 @@ extension AuthenticationInteractor {
     typealias DependencyProviders = StateProvider & UseCaseProviders
 
     struct Dependencies: DependencyProviders {
+
         //States
         var userState: UserState
 

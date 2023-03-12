@@ -1,15 +1,13 @@
 //
-//  ViewModel.swift
+//  ViewModelDataSource.swift
 //  Switch
 //
-//  Created by Stepan Vardanyan on 11.03.23.
+//  Created by Stepan Vardanyan on 12.03.23.
 //
 
-import Foundation
+protocol ViewModel {
 
-protocol ViewModel: ObservableObject {
+    associatedtype DataSource
 
-    associatedtype Dependencies
-
-    init(dependencies: Dependencies)
+    init(dataSource: DataSource)
 }

@@ -7,25 +7,28 @@
 
 import SwiftUI
 
-struct AuthenticationView<ViewModel>: View where ViewModel: AuthenticationViewModelProtocol {
+struct AuthenticationView<Presenter, ViewModel>: View where Presenter: AuthenticationPresenterProtocol,
+                                                            ViewModel: AuthenticationViewModelProtocol {
+    @StateObject private var presenter: Presenter
 
-    @StateObject private var viewModel: ViewModel
+    private let viewModel: ViewModel
 
-    init(viewModel: ViewModel) {
-        _viewModel = StateObject(wrappedValue: viewModel)
+    init(presenter: Presenter, viewModel: ViewModel) {
+        _presenter = StateObject(wrappedValue: presenter)
+        self.viewModel = viewModel
     }
 
     var image: some View {
         Image(systemName: viewModel.imageName)
             .imageScale(.large)
-            .foregroundColor(.accentColor)
+            .foregroundColor(.black)
     }
 
     var inputView: some View {
         Group {
-            TextField("Username", text: $viewModel.username)
+            TextField("Username", text: $presenter.username)
 
-            SecureField("Password", text: $viewModel.password)
+            SecureField("Password", text: $presenter.password)
         }
         .padding()
         .background(Color.white)
@@ -34,7 +37,7 @@ struct AuthenticationView<ViewModel>: View where ViewModel: AuthenticationViewMo
 
     var actionButton: some View {
         Button {
-            viewModel.onAction()
+            presenter.onAction()
         } label: {
             Text(viewModel.actionTitle)
                 .font(.title3)
@@ -49,7 +52,7 @@ struct AuthenticationView<ViewModel>: View where ViewModel: AuthenticationViewMo
 
     var resetButton: some View {
         Button {
-            viewModel.onReset()
+            presenter.onReset()
         } label: {
             Text(viewModel.resetTitle)
                 .font(.title3)
@@ -64,7 +67,10 @@ struct AuthenticationView<ViewModel>: View where ViewModel: AuthenticationViewMo
 
     var content: some View {
         VStack(spacing: 16) {
-            if viewModel.shouldShowInputFields {
+
+            image
+
+            if presenter.shouldShowInputFields {
                 inputView
                 HStack {
                     resetButton
@@ -82,12 +88,12 @@ struct AuthenticationView<ViewModel>: View where ViewModel: AuthenticationViewMo
             .background(Color.init(white: 0.95))
             .cornerRadius(16)
             .padding()
-            .disabled(viewModel.shouldDisableInputView)
+            .disabled(presenter.shouldDisableInputView)
 
         // TODO: This is a workaround to get the state changes.
-            .onChange(of: viewModel.isAuthenticated) { newValue in
-                if newValue == true {
-                    viewModel.onReset()
+            .onChange(of: presenter.shouldShowInputFields) { newValue in
+                if newValue == false {
+                    presenter.onReset()
                 }
             }
     }
