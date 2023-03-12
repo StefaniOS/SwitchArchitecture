@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ValidateUsernameUseCase {
+struct ValidateUsernameUseCase: UseCase {
 
     func execute(username: String) -> Bool {
         let RegEx = "\\A\\w{4,12}\\z"

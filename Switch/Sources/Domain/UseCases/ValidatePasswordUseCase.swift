@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ValidatePasswordUseCase {
+struct ValidatePasswordUseCase: UseCase {
 
     func execute(password: String) -> Bool {
         let passwordRegEx = "^[0-9]+${4,12}"

@@ -7,35 +7,71 @@
 
 import Foundation
 
-class AuthenticationViewModel: ObservableObject {
+protocol AuthenticationViewModelProtocol: ViewModel {
+
+    var username: String { get set }
+    var password: String { get set }
+
+    var isAuthenticated: Bool { get }
+    var imageName: String { get }
+    var actionTitle: String { get }
+    var resetTitle: String { get }
+
+    var shouldShowInputFields: Bool { get }
+    var shouldDisableInputView: Bool { get }
+
+    func onAction()
+    func onReset()
+}
+
+class AuthenticationViewModel: AuthenticationViewModelProtocol {
 
     @Published var username: String = ""
     @Published var password: String = ""
 
-    let interactor: AuthenticationInteractor
+    private var userState: UserState { dependencies.userState }
+    private var interactor: any AuthenticationInteractorProtocol { dependencies.interactor }
 
-    init(interactor: AuthenticationInteractor) {
-        self.interactor = interactor
+    private let dependencies: Dependencies
+
+    required init(dependencies: Dependencies) {
+        self.dependencies = dependencies
     }
 }
 
 extension AuthenticationViewModel {
 
-    var isAuthenticated: Bool { interactor.isAuthenticated }
+    typealias StateProvider = UserStateProvider
+    typealias DependencyProviders = StateProvider & AuthenticationInteractorProvider
+
+    struct Dependencies: DependencyProviders {
+
+        var userState: UserState { stateProvider.userState }
+
+        var interactor: any AuthenticationInteractorProtocol
+
+        private var stateProvider: UserStateProvider
+
+        init(stateProvider: StateProvider,
+            interactor: any AuthenticationInteractorProtocol) {
+            self.interactor = interactor
+            self.stateProvider = stateProvider
+        }
+    }
+}
+
+extension AuthenticationViewModel {
+
+    var isAuthenticated: Bool { userState.authentication.authenticated }
     var imageName: String { isAuthenticated ? "lock.open.fill" : "lock.fill" }
     var actionTitle: String { isAuthenticated ? "Logout" : "Login" }
     var resetTitle: String { "Reset" }
 
     var shouldShowInputFields: Bool { !isAuthenticated }
-    var shouldDisableInputView: Bool { interactor.isAuthenticating }
+    var shouldDisableInputView: Bool { userState.authentication.isRequesting }
 }
 
 extension AuthenticationViewModel {
-
-    func onReset() {
-        username = ""
-        password = ""
-    }
 
     func onAction() {
         guard !isAuthenticated else {
@@ -44,6 +80,11 @@ extension AuthenticationViewModel {
         }
 
         onLogin()
+    }
+
+    func onReset() {
+        username = ""
+        password = ""
     }
 
     private func onLogin() {

@@ -28,6 +28,13 @@
 		2A95485029B8EF9600B4AAEF /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A95484F29B8EF9600B4AAEF /* AuthenticationService.swift */; };
 		2AD8AC1829BCDCCD00C0525A /* ValidateUsernameUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8AC1729BCDCCD00C0525A /* ValidateUsernameUseCase.swift */; };
 		2AD8AC1A29BCDF3000C0525A /* ValidatePasswordUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8AC1929BCDF3000C0525A /* ValidatePasswordUseCase.swift */; };
+		2AD8AC1C29BD177C00C0525A /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8AC1B29BD177C00C0525A /* ViewModel.swift */; };
+		2AD8AC1E29BD17A300C0525A /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8AC1D29BD17A300C0525A /* Interactor.swift */; };
+		2AD8AC2029BD1BC800C0525A /* UseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8AC1F29BD1BC800C0525A /* UseCase.swift */; };
+		2AD8AC2229BD1F1700C0525A /* UseCaseProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8AC2129BD1F1700C0525A /* UseCaseProviders.swift */; };
+		2AD8AC2529BD2A9100C0525A /* StateProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8AC2429BD2A9100C0525A /* StateProviders.swift */; };
+		2AD8AC2729BD2F1400C0525A /* InteractorProviders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8AC2629BD2F1400C0525A /* InteractorProviders.swift */; };
+		2AD8AC2929BD3DD900C0525A /* AppStore+StateProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AD8AC2829BD3DD900C0525A /* AppStore+StateProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +61,13 @@
 		2A95484F29B8EF9600B4AAEF /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		2AD8AC1729BCDCCD00C0525A /* ValidateUsernameUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateUsernameUseCase.swift; sourceTree = "<group>"; };
 		2AD8AC1929BCDF3000C0525A /* ValidatePasswordUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatePasswordUseCase.swift; sourceTree = "<group>"; };
+		2AD8AC1B29BD177C00C0525A /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
+		2AD8AC1D29BD17A300C0525A /* Interactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
+		2AD8AC1F29BD1BC800C0525A /* UseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCase.swift; sourceTree = "<group>"; };
+		2AD8AC2129BD1F1700C0525A /* UseCaseProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseProviders.swift; sourceTree = "<group>"; };
+		2AD8AC2429BD2A9100C0525A /* StateProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateProviders.swift; sourceTree = "<group>"; };
+		2AD8AC2629BD2F1400C0525A /* InteractorProviders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractorProviders.swift; sourceTree = "<group>"; };
+		2AD8AC2829BD3DD900C0525A /* AppStore+StateProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppStore+StateProvider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +95,7 @@
 			children = (
 				2A6C3E9D29AAC9A600DE3EF8 /* SwitchApp.swift */,
 				2A95483A29B74DD400B4AAEF /* ContentView.swift */,
+				2AD8AC2329BD208800C0525A /* Providers */,
 				2A18A87529B68A610060F7DB /* State */,
 				2A95484029B76E1500B4AAEF /* Presentation */,
 				2A95484429B76E5E00B4AAEF /* Domain */,
@@ -104,6 +119,7 @@
 			isa = PBXGroup;
 			children = (
 				2A18A86729B540FC0060F7DB /* AppStore.swift */,
+				2AD8AC2829BD3DD900C0525A /* AppStore+StateProvider.swift */,
 			);
 			path = Store;
 			sourceTree = "<group>";
@@ -184,6 +200,9 @@
 			isa = PBXGroup;
 			children = (
 				2A6C3EAE29AACA3200DE3EF8 /* Store.swift */,
+				2AD8AC1B29BD177C00C0525A /* ViewModel.swift */,
+				2AD8AC1D29BD17A300C0525A /* Interactor.swift */,
+				2AD8AC1F29BD1BC800C0525A /* UseCase.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -246,6 +265,16 @@
 				2A95484E29B8EDE400B4AAEF /* Repositories */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		2AD8AC2329BD208800C0525A /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				2AD8AC2429BD2A9100C0525A /* StateProviders.swift */,
+				2AD8AC2629BD2F1400C0525A /* InteractorProviders.swift */,
+				2AD8AC2129BD1F1700C0525A /* UseCaseProviders.swift */,
+			);
+			path = Providers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -320,9 +349,13 @@
 			files = (
 				2A95483D29B74F3300B4AAEF /* AuthenticationViewModel.swift in Sources */,
 				2A95484229B76E4600B4AAEF /* AuthenticationInteractor.swift in Sources */,
+				2AD8AC2529BD2A9100C0525A /* StateProviders.swift in Sources */,
 				2A18A87F29B68DF70060F7DB /* AppState.swift in Sources */,
 				2A95484929B7738500B4AAEF /* LogoutUseCase.swift in Sources */,
 				2A95483B29B74DD400B4AAEF /* ContentView.swift in Sources */,
+				2AD8AC2229BD1F1700C0525A /* UseCaseProviders.swift in Sources */,
+				2AD8AC2929BD3DD900C0525A /* AppStore+StateProvider.swift in Sources */,
+				2AD8AC2029BD1BC800C0525A /* UseCase.swift in Sources */,
 				2A18A87B29B68D330060F7DB /* AppAction.swift in Sources */,
 				2A6C3EA029AAC9A600DE3EF8 /* AuthenticationView.swift in Sources */,
 				2A18A87D29B68D9A0060F7DB /* UserReducer.swift in Sources */,
@@ -330,10 +363,13 @@
 				2A18A87929B68CFB0060F7DB /* AppReducer.swift in Sources */,
 				2A6C3E9E29AAC9A600DE3EF8 /* SwitchApp.swift in Sources */,
 				2AD8AC1A29BCDF3000C0525A /* ValidatePasswordUseCase.swift in Sources */,
+				2AD8AC1E29BD17A300C0525A /* Interactor.swift in Sources */,
 				2A18A86529B537E70060F7DB /* Store.swift in Sources */,
 				2A95484D29B8EDDE00B4AAEF /* UserAuthenticationRepository.swift in Sources */,
+				2AD8AC1C29BD177C00C0525A /* ViewModel.swift in Sources */,
 				2AD8AC1829BCDCCD00C0525A /* ValidateUsernameUseCase.swift in Sources */,
 				2A95485029B8EF9600B4AAEF /* AuthenticationService.swift in Sources */,
+				2AD8AC2729BD2F1400C0525A /* InteractorProviders.swift in Sources */,
 				2A95484629B772C700B4AAEF /* LoginUseCase.swift in Sources */,
 				2A18A87729B68C930060F7DB /* UserAction.swift in Sources */,
 				2A18A86829B540FC0060F7DB /* AppStore.swift in Sources */,

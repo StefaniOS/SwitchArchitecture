@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LoginUseCase {
+struct LoginUseCase: UseCase {
 
     private let store: AppStore
 

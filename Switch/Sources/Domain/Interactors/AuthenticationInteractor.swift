@@ -7,51 +7,71 @@
 
 import Foundation
 
-struct AuthenticationInteractor {
+protocol AuthenticationInteractorProtocol: Interactor {
+    func validate(username: String, password: String) -> Bool
+    func executeLogin(username: String, password: String)
+    func executeLogout()
+}
 
-    // Store
-    private let store: AppStore
+struct AuthenticationInteractor: AuthenticationInteractorProtocol {
 
-    // States
-    private var userState: UserState { store.state.userState }
+    private let dependencies: Dependencies
 
-    // UseCases
-    private let validateUsernameUseCase: ValidateUsernameUseCase
-    private let validatePasswordUseCase: ValidatePasswordUseCase
-    private let loginUseCase: LoginUseCase
-    private let logoutUseCase: LogoutUseCase
-
-    init(store: AppStore,
-         validateUsernameUseCase: ValidateUsernameUseCase,
-         validatePasswordUseCase: ValidatePasswordUseCase,
-         loginUseCase: LoginUseCase,
-         logoutUseCase: LogoutUseCase) {
-        self.store = store
-        self.validateUsernameUseCase = validateUsernameUseCase
-        self.validatePasswordUseCase = validatePasswordUseCase
-        self.loginUseCase = loginUseCase
-        self.logoutUseCase = logoutUseCase
+    init(dependencies: Dependencies) {
+        self.dependencies = dependencies
     }
 }
 
 extension AuthenticationInteractor {
 
-    var isAuthenticated: Bool { userState.authentication.authenticated }
-    var isAuthenticating: Bool { userState.authentication.isRequesting }
+    typealias StateProvider = UserStateProvider
+
+    typealias UseCaseProviders = ValidateUsernameUseCaseProvider &
+                                 ValidatePasswordUseCaseProvider &
+                                 LoginUseCaseProvider &
+                                 LogoutUseCaseProvider
+
+    typealias DependencyProviders = StateProvider & UseCaseProviders
+
+    struct Dependencies: DependencyProviders {
+        //States
+        var userState: UserState
+
+        // UseCases
+        var validateUsernameUseCase: ValidateUsernameUseCase
+        var validatePasswordUseCase: ValidatePasswordUseCase
+        var loginUseCase: LoginUseCase
+        var logoutUseCase: LogoutUseCase
+
+        init(validateUsernameUseCase: ValidateUsernameUseCase = .init(),
+             validatePasswordUseCase: ValidatePasswordUseCase = .init(),
+             loginUseCase: LoginUseCase,
+             logoutUseCase: LogoutUseCase,
+             stateProvider: StateProvider) {
+            self.validateUsernameUseCase = validateUsernameUseCase
+            self.validatePasswordUseCase = validatePasswordUseCase
+            self.loginUseCase = loginUseCase
+            self.logoutUseCase = logoutUseCase
+            self.userState = stateProvider.userState
+        }
+    }
+}
+
+extension AuthenticationInteractor {
 
     func validate(username: String, password: String) -> Bool {
-        let isValidUsername = validateUsernameUseCase.execute(username: username)
-        let isValidPassword = validatePasswordUseCase.execute(password: password)
+        let isValidUsername = dependencies.validateUsernameUseCase.execute(username: username)
+        let isValidPassword = dependencies.validatePasswordUseCase.execute(password: password)
         return isValidUsername && isValidPassword
     }
 
     func executeLogin(username: String, password: String) {
         Task {
-            await loginUseCase.execute(username: username, password: password)
+            await dependencies.loginUseCase.execute(username: username, password: password)
         }
     }
 
     func executeLogout() {
-        logoutUseCase.execute()
+        dependencies.logoutUseCase.execute()
     }
 }

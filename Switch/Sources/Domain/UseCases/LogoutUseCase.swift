@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LogoutUseCase {
+struct LogoutUseCase: UseCase {
 
     private let store: AppStore
 

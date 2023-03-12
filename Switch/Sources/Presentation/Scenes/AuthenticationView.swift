@@ -7,12 +7,11 @@
 
 import SwiftUI
 
-struct AuthenticationView: View {
+struct AuthenticationView<ViewModel>: View where ViewModel: AuthenticationViewModelProtocol {
 
-    @StateObject
-    private var viewModel: AuthenticationViewModel
+    @StateObject private var viewModel: ViewModel
 
-    init(viewModel: AuthenticationViewModel) {
+    init(viewModel: ViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
@@ -67,8 +66,13 @@ struct AuthenticationView: View {
         VStack(spacing: 16) {
             if viewModel.shouldShowInputFields {
                 inputView
+                HStack {
+                    resetButton
+                    actionButton
+                }
+            } else {
+                actionButton
             }
-            actionButton
         }
         .padding()
     }
@@ -79,6 +83,8 @@ struct AuthenticationView: View {
             .cornerRadius(16)
             .padding()
             .disabled(viewModel.shouldDisableInputView)
+
+        // TODO: This is a workaround to get the state changes.
             .onChange(of: viewModel.isAuthenticated) { newValue in
                 if newValue == true {
                     viewModel.onReset()

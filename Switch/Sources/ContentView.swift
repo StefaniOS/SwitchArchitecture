@@ -16,10 +16,14 @@ struct ContentView: View {
     }
 
     var body: some View {
-        AuthenticationView(viewModel: .init(interactor: .init(store: store,
-                                                              validateUsernameUseCase: .init(),
-                                                              validatePasswordUseCase: .init(),
-                                                              loginUseCase: .init(store: store),
-                                                              logoutUseCase: .init(store: store))))
+        makeAuthenticationView()
+    }
+
+    func makeAuthenticationView() -> some View {
+        let interactor: AuthenticationInteractor = .init(dependencies: .init(loginUseCase: .init(store: store),
+                                                                             logoutUseCase: .init(store: store),
+                                                                             stateProvider: store))
+        let viewModel: AuthenticationViewModel = .init(dependencies: .init(stateProvider: store, interactor: interactor))
+        return AuthenticationView(viewModel: viewModel)
     }
 }
