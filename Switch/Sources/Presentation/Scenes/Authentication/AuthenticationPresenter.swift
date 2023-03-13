@@ -9,12 +9,15 @@ import Foundation
 
 protocol AuthenticationPresenterProtocol: Presenter {
 
+    // Published
     var username: String { get set }
     var password: String { get set }
 
+    // Presentation Logic
     var shouldShowInputFields: Bool { get }
     var shouldDisableInputView: Bool { get }
 
+    // Actions
     func onAction()
     func onReset()
 }
@@ -34,31 +37,31 @@ class AuthenticationPresenter {
     }
 }
 
+// MARK: - Private Methods
+
 extension AuthenticationPresenter {
 
-    typealias StateProvider = UserStateProvider
-    typealias DependencyProviders = StateProvider & AuthenticationInteractorProvider
-
-    struct Dependencies: DependencyProviders {
-
-        var userState: UserState { stateProvider.userState }
-
-        var interactor: any AuthenticationInteractorProtocol
-
-        private var stateProvider: UserStateProvider
-
-        init(stateProvider: StateProvider,
-            interactor: any AuthenticationInteractorProtocol) {
-            self.interactor = interactor
-            self.stateProvider = stateProvider
+    private func onLogin() {
+        guard interactor.validate(username: username, password: password) else {
+            onReset()
+            return
         }
+        interactor.executeLogin(username: username, password: password)
+    }
+
+    private func onLogout() {
+        interactor.executeLogout()
     }
 }
+
+// MARK: - AuthenticationViewModelDataSource
 
 extension AuthenticationPresenter: AuthenticationViewModelDataSource {
 
     var isAuthenticated: Bool { userState.authentication.authenticated }
 }
+
+// MARK: - AuthenticationPresenterProtocol
 
 extension AuthenticationPresenter: AuthenticationPresenterProtocol {
 
@@ -76,17 +79,5 @@ extension AuthenticationPresenter: AuthenticationPresenterProtocol {
     func onReset() {
         username = ""
         password = ""
-    }
-
-    private func onLogin() {
-        guard interactor.validate(username: username, password: password) else {
-            onReset()
-            return
-        }
-        interactor.executeLogin(username: username, password: password)
-    }
-
-    private func onLogout() {
-        interactor.executeLogout()
     }
 }

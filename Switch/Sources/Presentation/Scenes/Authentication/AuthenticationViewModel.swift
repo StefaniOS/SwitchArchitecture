@@ -24,6 +24,8 @@ struct AuthenticationViewModel: ViewModel {
     }
 }
 
+// MARK: - AuthenticationViewModelProtocol
+
 extension AuthenticationViewModel: AuthenticationViewModelProtocol {
 
     var imageName: String { dataSource.isAuthenticated ? "lock.open.fill" : "lock.fill" }

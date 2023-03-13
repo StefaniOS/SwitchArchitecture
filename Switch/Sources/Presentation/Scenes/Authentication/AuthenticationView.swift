@@ -18,13 +18,29 @@ struct AuthenticationView<Presenter, ViewModel>: View where Presenter: Authentic
         self.viewModel = viewModel
     }
 
-    var image: some View {
+    var body: some View {
+        content
+
+        // TODO: This is a workaround to get the state changes.
+            .onChange(of: presenter.shouldShowInputFields) { newValue in
+                if newValue == false {
+                    presenter.onReset()
+                }
+            }
+    }
+}
+
+// MARK: - Subviews
+
+extension AuthenticationView {
+
+    private var image: some View {
         Image(systemName: viewModel.imageName)
             .imageScale(.large)
             .foregroundColor(.black)
     }
 
-    var inputView: some View {
+    private var inputView: some View {
         Group {
             TextField("Username", text: $presenter.username)
 
@@ -35,7 +51,7 @@ struct AuthenticationView<Presenter, ViewModel>: View where Presenter: Authentic
         .cornerRadius(16)
     }
 
-    var actionButton: some View {
+    private var actionButton: some View {
         Button {
             presenter.onAction()
         } label: {
@@ -50,7 +66,7 @@ struct AuthenticationView<Presenter, ViewModel>: View where Presenter: Authentic
         }
     }
 
-    var resetButton: some View {
+    private var resetButton: some View {
         Button {
             presenter.onReset()
         } label: {
@@ -65,7 +81,7 @@ struct AuthenticationView<Presenter, ViewModel>: View where Presenter: Authentic
         }
     }
 
-    var content: some View {
+    private var content: some View {
         VStack(spacing: 16) {
 
             image
@@ -81,20 +97,9 @@ struct AuthenticationView<Presenter, ViewModel>: View where Presenter: Authentic
             }
         }
         .padding()
-    }
-
-    var body: some View {
-        content
-            .background(Color.init(white: 0.95))
-            .cornerRadius(16)
-            .padding()
-            .disabled(presenter.shouldDisableInputView)
-
-        // TODO: This is a workaround to get the state changes.
-            .onChange(of: presenter.shouldShowInputFields) { newValue in
-                if newValue == false {
-                    presenter.onReset()
-                }
-            }
+        .background(Color.init(white: 0.95))
+        .cornerRadius(16)
+        .padding()
+        .disabled(presenter.shouldDisableInputView)
     }
 }

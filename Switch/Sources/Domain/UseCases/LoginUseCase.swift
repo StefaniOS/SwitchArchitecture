@@ -11,7 +11,7 @@ struct LoginUseCase: UseCase {
 
     private let store: AppStore
 
-    private var authenticationRepository: UserAuthenticationRepository
+    private let authenticationRepository: UserAuthenticationRepository
 
     init(store: AppStore,
          authenticationRepository: UserAuthenticationRepository = .init()) {
